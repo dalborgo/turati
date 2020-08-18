@@ -57,7 +57,7 @@ async function main (baseDir, limitMonths, prod = true) {
 
 const promises = []
 
-promises.push(() => main('c:\\tmp', 1)) //\\10.0.0.17\Asten\MARCO\prova
+promises.push(() => main('c:\\tmp', 2)) //\\10.0.0.17\Asten\MARCO\prova
 //promises.push(() => main('\\\\10.0.0.17\\Asten\\MARCO\\prova2', 2))
 
 async function execAll () {
