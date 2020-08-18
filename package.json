@@ -2,11 +2,20 @@
   "name": "turati",
   "version": "1.0.0",
   "scripts": {
-    "start": "node -r esm src"
+    "start": "nodemon -r esm src"
   },
   "main": "index.js",
   "dependencies": {
-    "esm": "^3.2.25"
+    "chalk": "^4.1.0",
+    "esm": "^3.2.25",
+    "moment": "^2.27.0",
+    "q": "^1.5.1",
+    "readdir": "^1.0.2",
+    "recursive-readdir": "^2.2.2",
+    "rimraf": "^3.0.2"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
 }

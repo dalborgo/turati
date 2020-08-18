@@ -13,7 +13,6 @@
     "sourceType": "module"
   },
   "rules": {
-    "no-console": "warn",
     "sort-keys": [
       1,
       "asc",
