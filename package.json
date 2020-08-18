@@ -1,0 +1,12 @@
+{
+  "name": "turati",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node -r esm src"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "esm": "^3.2.25"
+  },
+  "license": "MIT"
+}
