@@ -4,17 +4,20 @@ import readdir from 'recursive-readdir'
 import Q from 'q'
 import path from 'path'
 import chalk from 'chalk'
+import cron from './cron'
+
+const isProd = () => process.env.NODE_ENV === 'production'
 
 const promises = []
 
 const destDir = 'e:\\Dati'
-const fromBaseDir = 'c:\\Users\\Asten\\Documents'
-promises.push(() => main('INVENTARI', 6, false))
-promises.push(() => main('TXT\\SUMITOMO', 12, false))
+promises.push(() => main('c:\\Users\\Asten\\Documents', 'INVENTARI', 6, false))
+promises.push(() => main('c:\\Users\\Asten\\Documents', 'TXT\\SUMITOMO', 12, false))
 
-async function main (secFolder, limitMonths, prod = true) {
+async function main (fromBaseDir, secFolder, limitMonths, prod = true) {
   let count = 0
   const baseDir = path.join(fromBaseDir, secFolder)
+  console.log()
   console.info('Folder to copy:', chalk.blue(secFolder))
   console.log()
   try {
@@ -65,17 +68,28 @@ async function main (secFolder, limitMonths, prod = true) {
     return { ok: true, taskName: secFolder, count }
   } catch (err) {
     console.error(chalk.red(err.message))
-    return { ok: false, message: err.message, err, taskName: secFolder }
+    console.log()
+    return {
+      count,
+      err,
+      message: err.message,
+      ok: false,
+      taskName: secFolder,
+    }
   }
 }
 
 async function execAll () {
-  const response = []
+  const results = []
   for (let exec of promises) {
-    response.push(await exec())
+    results.push(await exec())
   }
-  console.log()
-  return { response }
+  return { ok: true, results }
 }
 
-execAll().then(res => console.log(JSON.stringify(res, null, 2)))
+if (isProd()) {
+  const when = { dayOfWeek: 6, hour: 3, minute: 0 }
+  cron.startCron('execAll', when, when, execAll)
+} else {
+  execAll().then(res => console.log(JSON.stringify(res, null, 2)))
+}
