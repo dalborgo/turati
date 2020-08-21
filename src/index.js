@@ -22,7 +22,7 @@ async function main (fromBaseDir, secFolder, limitMonths, prod = true) {
   console.log()
   try {
     const files = await readdir(baseDir)
-    for await (const file of files) {
+    for (const file of files) {
       const stat = await Q.nfcall(fs.stat, file)
       const fromTime = new Date(stat.mtime)
       const date = moment(fromTime)
